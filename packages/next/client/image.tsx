@@ -99,6 +99,8 @@ export type ImageProps = Omit<
   height?: number | string
   layout?: LayoutValue
   loader?: ImageLoader
+  WrapperComponent?: React.ElementType,
+  SizerComponent?: React.ElementType,
   quality?: number | string
   priority?: boolean
   loading?: LoadingValue
@@ -321,6 +323,8 @@ export default function Image({
   objectFit,
   objectPosition,
   onLoadingComplete,
+  WrapperComponent = 'span',
+  SizerComponent = 'span',
   loader = defaultImageLoader,
   placeholder = 'empty',
   blurDataURL,
@@ -638,9 +642,9 @@ export default function Image({
   }
 
   return (
-    <span style={wrapperStyle}>
+    <WrapperComponent style={wrapperStyle}>
       {hasSizer ? (
-        <span style={sizerStyle}>
+        <SizerComponent style={sizerStyle}>
           {sizerSvg ? (
             <img
               style={{
@@ -659,7 +663,7 @@ export default function Image({
               src={`data:image/svg+xml;base64,${toBase64(sizerSvg)}`}
             />
           ) : null}
-        </span>
+        </SizerComponent>
       ) : null}
       <img
         {...rest}
@@ -718,7 +722,7 @@ export default function Image({
           ></link>
         </Head>
       ) : null}
-    </span>
+    </WrapperComponent>
   )
 }
 
